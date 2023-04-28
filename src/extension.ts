@@ -44,7 +44,7 @@ export function activate(context: vscode.ExtensionContext) {
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand("docker-explorer.stopContainer", (container) => {
-        dockerContainers.stopContainer(container.name);
+        dockerContainers.stopContainer(container.id);
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand("docker-explorer.restartContainer", (container) => {
