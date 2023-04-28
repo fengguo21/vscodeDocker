@@ -155,9 +155,9 @@ export class DockerContainers
     var container = dockerClient.getContainer(containerName);
     console.log(container,'container getcontaiern===')
     container.stop(function (err:any, data:any) {
-      if(data){
-        this.getChildren()
-      }
+      // if(data){
+      //   this.getChildren()
+      // }
       console.log(err,data);
     });
 
