@@ -130,6 +130,9 @@ export class DockerContainers
     var container = dockerClient.getContainer(containerName);
     console.log(container,'container getcontaiern===')
     container.start(function (err:any, data:any) {
+      // if(data){
+      //   this.getChildren()
+      // }
       console.log(err,data);
     });
     // let res = container.start();
@@ -148,8 +151,18 @@ export class DockerContainers
   }
 
   public stopContainer(containerName: string): void {
-    Executor.runInTerminal(`docker stop ${containerName}`);
-    AppInsightsClient.sendEvent("stopContainer");
+
+    var container = dockerClient.getContainer(containerName);
+    console.log(container,'container getcontaiern===')
+    container.stop(function (err:any, data:any) {
+      if(data){
+        this.getChildren()
+      }
+      console.log(err,data);
+    });
+
+    // Executor.runInTerminal(`docker stop ${containerName}`);
+    // AppInsightsClient.sendEvent("stopContainer");
   }
 
   public restartContainer(containerName: string): void {
