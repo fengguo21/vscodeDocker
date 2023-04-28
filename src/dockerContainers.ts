@@ -68,12 +68,14 @@ export class DockerContainers
   }
 
   public async getChildren(element?: DockerContainer): Promise<DockerContainer[]>{
+    console.log('childewn=====')
+    
    
     const  containers = await dockerClient.listContainers( { all: true })
-    console.log(containers,'containers')
+
     let tmp = []
      containers.forEach(item =>{
-      console.log(item,'item')
+
 
       const icon = item.State === 'running' ? new ThemeIcon('notebook-execute',new ThemeColor('list.focusHighlightForeground')) : new ThemeIcon('notebook-stop',new ThemeColor('list.errorForeground'))
       // const icon = new vscode.T('info')//  this.context.asAbsolutePath(path.join("resources", img));
@@ -82,43 +84,7 @@ export class DockerContainers
      })  
     return tmp
   }
-//  setTimeout(() => {
-//         console.log(containers, "containers222");
-//         return Promise.resolve(containers);
-//       }, 1000);
-    // console.log(containers, "containers000001111");
-    // return Promise.resolve([]);
 
-   
-    // return Promise.resolve(containers);
-    // const containers = [];
-    // try {
-    //     this.cachedContainerStrings = this.getContainerStrings();
-    //     this.cachedContainerStrings.forEach((containerString) => {
-    //         const items = containerString.split(" ");
-    //         const image = items[3] === "Up" ? "container-on.png" : "container-off.png";
-    //         containers.push(new DockerContainer(
-    //             items[0],
-    //             items[1],
-    //             items[2],
-    //             this.context.asAbsolutePath(path.join("resources", image)),
-    //             {
-    //                 command: "docker-explorer.getContainer",
-    //                 title: "",
-    //                 arguments: [items[1]],
-    //             },
-    //         ));
-    //     });
-    // } catch (error) {
-    //     if (!DockerTreeBase.isErrorMessageShown) {
-    //         vscode.window.showErrorMessage(`[Failed to list Docker Containers] ${error.stderr}`);
-    //         DockerTreeBase.isErrorMessageShown = true;
-    //     }
-    // } finally {
-    //     this.setAutoRefresh(this.cachedContainerStrings, this.getContainerStrings);
-    // }
-
-    // return Promise.resolve([new DockerContainer('dfd','d','d','d',null)]);
 
 
   public getContainer(containerName: string): void {
@@ -130,9 +96,13 @@ export class DockerContainers
     var container = dockerClient.getContainer(containerName);
     console.log(container,'container getcontaiern===')
     container.start(function (err:any, data:any) {
-      // if(data){
-      //   this.getChildren()
-      // }
+      if(data){
+        console.log('refresh===')
+        setTimeout(() => {
+          vscode.commands.executeCommand("docker-explorer.refreshDockerContainers");
+        }, 100);
+
+      }
       console.log(err,data);
     });
     // let res = container.start();
@@ -155,9 +125,13 @@ export class DockerContainers
     var container = dockerClient.getContainer(containerName);
     console.log(container,'container getcontaiern===')
     container.stop(function (err:any, data:any) {
-      // if(data){
-      //   this.getChildren()
-      // }
+      if(data){
+        console.log('refresh===')
+        setTimeout(() => {
+          vscode.commands.executeCommand("docker-explorer.refreshDockerContainers");
+        }, 100);
+
+      }
       console.log(err,data);
     });
 

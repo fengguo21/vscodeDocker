@@ -86,10 +86,10 @@ export class DockerImages extends DockerTreeBase<DockerImage> implements vscode.
     public async getChildren(element?: DockerImage): Promise<DockerImage[]> {
 
         const  dockerimages = await dockerClient.listImages( { all: true })
-        console.log(dockerimages,'images')
+       
         let tmp = []
         dockerimages.forEach(item =>{
-          console.log(item,'item')
+        
     
           const icon = new vscode.ThemeIcon('repo',new vscode.ThemeColor(''))
           // const icon = new vscode.T('info')//  this.context.asAbsolutePath(path.join("resources", img));
