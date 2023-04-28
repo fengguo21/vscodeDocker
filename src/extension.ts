@@ -3,7 +3,7 @@ import * as vscode from "vscode";
 import { AppInsightsClient } from "./appInsightsClient";
 import { AzureContainerRegistries } from "./azureContainerRegistries";
 import { DockerContainers } from "./dockerContainers";
-import { DockerHubManager } from "./DockerHub/DockerHubManager";
+
 import { DockerHubTreeDataProvider } from "./dockerHubTreeDataProvider";
 import { DockerImages } from "./dockerImages";
 import { Executor } from "./executor";
@@ -36,7 +36,7 @@ export function activate(context: vscode.ExtensionContext) {
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand("docker-explorer.startContainer", (container) => {
-        dockerContainers.startContainer(container.name);
+        dockerContainers.startContainer(container.id);
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand("docker-explorer.attachContainer", (container) => {

@@ -6,7 +6,14 @@ import { Executor } from "./executor";
 import { ACRHierachy } from "./Model/ACRHierachy";
 import { DockerImage } from "./Model/DockerImage";
 import { Utility } from "./utility";
+const Docker = require("dockerode");
 
+const dockerClient= new Docker({
+    host: "43.133.60.195",
+    port: process.env.DOCKER_PORT || 2375,
+  
+    version: "v1.25", // required when D
+  });
 const adjectives: string[] = [
     "aback", "abaft", "abandoned", "abashed", "aberrant", "abhorrent", "abiding", "abject", "ablaze", "able", "abnormal", "aboard", "aboriginal", "abortive", "abounding", "abrasive", "abrupt", "absent", "absorbed", "absorbing", "abstracted", "absurd", "abundant", "abusive", "acceptable", "accessible", "accidental", "accurate", "acid", "acidic", "acoustic", "acrid", "actually", "ad hoc", "adamant", "adaptable", "addicted", "adhesive", "adjoining", "adorable", "adventurous", "afraid", "aggressive", "agonizing", "agreeable", "ahead", "ajar", "alcoholic", "alert", "alike", "alive", "alleged", "alluring", "aloof", "amazing", "ambiguous", "ambitious", "amuck", "amused", "amusing", "ancient", "angry", "animated", "annoyed", "annoying", "anxious", "apathetic", "aquatic", "aromatic", "arrogant", "ashamed", "aspiring", "assorted", "astonishing", "attractive", "auspicious", "automatic", "available", "average", "awake", "aware", "awesome", "awful", "axiomatic",
     "bad", "barbarous", "bashful", "bawdy", "beautiful", "befitting", "belligerent", "beneficial", "bent", "berserk", "best", "better", "bewildered", "big", "billowy", "bitter", "bizarre", "black", "bloody", "blue", "blushing", "boiling", "boorish", "bored", "boring", "bouncy", "boundless", "brainy", "brash", "brave", "brawny", "breakable", "breezy", "brief", "bright", "bright", "broad", "broken", "brown", "bumpy", "burly", "bustling", "busy",
@@ -76,37 +83,22 @@ export class DockerImages extends DockerTreeBase<DockerImage> implements vscode.
         return element;
     }
 
-    public getChildren(element?: DockerImage): Thenable<DockerImage[]> {
-        const images = [];
-        let imageStrings;
-        try {
-            imageStrings = this.getImageStrings();
-            imageStrings.forEach((imageString) => {
-                const items = imageString.split(" ");
-                if (items[2] !== "<none>") {
-                    images.push(new DockerImage(
-                        items[0],
-                        items[1],
-                        items[2],
-                        this.context.asAbsolutePath(path.join("resources", "image.png")),
-                        {
-                            command: "docker-explorer.getImage",
-                            title: "",
-                            arguments: [items[1], items[2]],
-                        },
-                    ));
-                }
-            });
-        } catch (error) {
-            if (!DockerTreeBase.isErrorMessageShown) {
-                vscode.window.showErrorMessage(`[Failed to list Docker Images] ${error.stderr}`);
-                DockerTreeBase.isErrorMessageShown = true;
-            }
-        } finally {
-            this.setAutoRefresh(imageStrings, this.getImageStrings);
-        }
+    public async getChildren(element?: DockerImage): Promise<DockerImage[]> {
 
-        return Promise.resolve(images);
+        const  dockerimages = await dockerClient.listImages( { all: true })
+        console.log(dockerimages,'images')
+        let tmp = []
+        dockerimages.forEach(item =>{
+          console.log(item,'item')
+    
+          const icon = new vscode.ThemeIcon('repo',new vscode.ThemeColor(''))
+          // const icon = new vscode.T('info')//  this.context.asAbsolutePath(path.join("resources", img));
+          // const icon =  new vscode.ThemeIcon('warning', new vscode.ThemeColor('problemsWarningIcon.foreground'))
+         tmp.push( new DockerImage(item.Id,item.RepoTags[0],icon  ))
+         })  
+        return tmp
+
+      
     }
 
     public getImage(repository: string, tag: string): void {

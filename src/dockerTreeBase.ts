@@ -15,7 +15,7 @@ export class DockerTreeBase<T> {
         this._onDidChangeTreeData.fire();
     }
 
-    protected setAutoRefresh(cachedItemStrings: Object[], getItemStringsCallback: () => Object[]): void {
+    protected setAutoRefresh(cachedItemStrings: string[], getItemStringsCallback: () => string[]): void {
         const interval = Utility.getConfiguration().get<number>("autoRefreshInterval");
         if (interval > 0) {
             clearTimeout(this._debounceTimer);
