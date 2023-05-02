@@ -64,7 +64,7 @@ export function activate(context: vscode.ExtensionContext) {
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand("docker-explorer.removeContainer", (container) => {
-        dockerContainers.removeContainer(container.name);
+        dockerContainers.removeContainer(container.id);
     }));
 
     context.subscriptions.push(vscode.commands.registerCommand("docker-explorer.executeCommandInContainer", (container) => {

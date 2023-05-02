@@ -10,7 +10,7 @@ import { DockerImage } from "./Model/DockerImage";
 
 const Docker = require("dockerode");
 const dockerClient= new Docker({
-  host: "43.133.60.195",
+  host: "124.220.157.101",
  
   
   port: process.env.DOCKER_PORT || 2375,
@@ -167,8 +167,17 @@ export class DockerContainers
   }
 
   public removeContainer(containerName: string): void {
-    Executor.runInTerminal(`docker rm ${containerName}`);
-    AppInsightsClient.sendEvent("removeContainer");
+    var container = dockerClient.getContainer(containerName);
+    console.log(container,'container getcontaiern===')
+    container.remove(function (err:any, data:any) {
+      if(data){
+        console.log('refresh===')
+        setTimeout(() => {
+          vscode.commands.executeCommand("docker-explorer.refreshDockerContainers");
+        }, 100);
+
+      }
+    });
   }
 
   public executeCommandInContainer(containerName: string): void {

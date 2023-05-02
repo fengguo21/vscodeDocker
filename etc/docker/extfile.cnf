@@ -1,0 +1,8 @@
+subjectAltName = DNS:,IP:158.246.104.194,IP:127.0.0.1
+extendedKeyUsage = serverAuth
+subjectAltName = DNS:124.220.157.101,IP:10.10.10.20,IP:127.0.0.1
+extendedKeyUsage = serverAuth
+subjectAltName = DNS:124.220.157.101,IP:158.246.104.194,IP:127.0.0.1
+extendedKeyUsage = serverAuth
+subjectAltName = DNS:124.220.157.101,IP:158.246.104.194,IP:127.0.0.1,IP:124.220.157.101
+extendedKeyUsage = serverAuth

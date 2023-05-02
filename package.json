@@ -33,27 +33,25 @@
   "main": "./out/src/extension",
   "contributes": {
     "viewsContainers": {
-        "activitybar": [
-          {
-            "id": "dockerMonitor",
-            "title": "Docker Monitor",
-            "icon": "./resources/light/docker.svg"
-          }
-        ]
-      },
+      "activitybar": [
+        {
+          "id": "dockerMonitor",
+          "title": "Docker Monitor",
+          "icon": "./resources/light/docker.svg"
+        }
+      ]
+    },
     "views": {
       "dockerMonitor": [
         {
           "id": "dockerExplorerContainers",
           "name": "Docker Containers"
-         
         },
         {
           "id": "dockerExplorerImages",
           "name": "Docker Images",
           "when": "config.docker-explorer.showDockerImages == true"
         }
-        
       ]
     },
     "commands": [
@@ -429,7 +427,6 @@
     "typescript": "^2.0.3",
     "@types/vscode": "1.75.0",
     "@vscode/test-electron": "^2.3.0",
-    
     "@vscode/vsce": "^2.19.0"
   },
   "dependencies": {
@@ -437,9 +434,10 @@
     "@microsoft/vscode-azext-azureutils": "^1.1.5",
     "@microsoft/vscode-azext-utils": "^1.2.2",
     "applicationinsights": "^0.20.1",
+    "axios": "^0.16.2",
+    "dockerode": "^3.3.5",
     "vscode-languageclient": "^8.1.0",
-    "vscode-tas-client": "^0.1.63",
-    "axios": "^0.16.2"
+    "vscode-tas-client": "^0.1.63"
   },
   "__npminstall_done": false
 }
