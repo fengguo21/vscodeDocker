@@ -7,10 +7,15 @@ import { ACRHierachy } from "./Model/ACRHierachy";
 import { DockerImage } from "./Model/DockerImage";
 import { Utility } from "./utility";
 const Docker = require("dockerode");
-
+const fs = require("fs");
 const dockerClient= new Docker({
     host: "124.220.157.101",
-    port: process.env.DOCKER_PORT || 2375,
+  ca: fs.readFileSync("/Users/renyakun/bt/vscodeDocker/src/etc/docker/ca.pem"),
+  cert: fs.readFileSync('/Users/renyakun/bt/vscodeDocker/src/etc/docker/cert.pem'),
+  key: fs.readFileSync('/Users/renyakun/bt/vscodeDocker/src/etc/docker/key.pem'),
+ 
+  
+  port: process.env.DOCKER_PORT || 2376,
   
     version: "v1.25", // required when D
   });

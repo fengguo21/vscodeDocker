@@ -436,6 +436,7 @@
     "applicationinsights": "^0.20.1",
     "axios": "^0.16.2",
     "dockerode": "^3.3.5",
+    "fs": "^0.0.1-security",
     "vscode-languageclient": "^8.1.0",
     "vscode-tas-client": "^0.1.63"
   },
